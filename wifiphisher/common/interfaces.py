@@ -383,6 +383,11 @@ class NetworkManager(object):
                 raise InvalidInterfaceError(interface_name, mode)
             elif mode == "AP" and not interface_adapter.has_ap_mode:
                 raise InvalidInterfaceError(interface_name, mode)
+
+            # raise an error if interface is already in the _active set
+            if interface_name in self._active:
+                raise InvalidInterfaceError(interface_name)
+
             # add the valid card to _active set
             self._active.add(interface_name)
             return True
